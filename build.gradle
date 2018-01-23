@@ -1,0 +1,59 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  
+  dependencies {
+    // JavaFX-Gradle-Plugin (https://github.com/FibreFoX/javafx-gradle-plugin)
+    classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'javafx-gradle-plugin'
+
+// Show the version of Java
+println("Java version: "+JavaVersion.current());
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    // utility - collection  of utility classes (my own code)  [ASL 2.0]
+    compile group: 'com.github.xzel23', name: 'utility', version: '0.8'
+
+    // Log4j2
+    compile     group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    compile     group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+
+    // FontAwesomeFX - icon collection [FontAweSomeFX: ASL 2.0, FontAweSome: SIL OFL 1.1 / Creative Commons]
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
+        
+    // JUnit - unit testing [EPL]
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+sourceSets {
+  main {
+    resources {
+        srcDirs = ["src/main/java"]
+    }
+    resources {
+        srcDirs = ["src/main/resources"]
+        includes = []
+    }
+  }
+}
