@@ -4,6 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class FxBrowser extends Application {
@@ -17,9 +20,18 @@ public class FxBrowser extends Application {
 	}
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
+	public void start(Stage stage) throws Exception {
+        // create a loader
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FxBrowser.fxml"));
 
+        // create the scene
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+
+        // setup stage
+        stage.setTitle(APP_NAME);
+        stage.setScene(scene);
+        stage.show();
 	}
 
 }
