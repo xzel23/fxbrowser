@@ -25,10 +25,13 @@ public class FxBrowserController {
     @FXML private void initialize() {
         WebEngine engine = webview.getEngine();
         engine .getLoadWorker().exceptionProperty().addListener((ChangeListener<Throwable>) (ov, t, t1) -> {
-            LOG_WEB.warn(String.valueOf(t1), t1);
+            LOG_WEB.warn("loadworker exception - "+String.valueOf(t1), t1);
             engine.loadContent(generateErrorHtml(t1));
         });
 
+        engine.onErrorProperty().set(evt -> {
+            LOG_WEB.warn(evt.getMessage());
+        });
     }
 
     private String generateErrorHtml(Throwable t1) {
