@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 
@@ -33,6 +34,7 @@
                   <FontAwesomeIconView glyphName="REFRESH" size="2em" />
                </graphic>
             </Button>
+          <Circle fx:id="led" fill="WHITE" radius="8.0" stroke="#bbbbbb" strokeType="OUTSIDE" strokeWidth="1.0" />
         </buttons>
       </ButtonBar>
             <StackPane HBox.hgrow="SOMETIMES">

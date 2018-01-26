@@ -4,9 +4,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.Paint;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
@@ -21,6 +30,27 @@ public class FxBrowserController {
     @FXML Button btnStopReload;
     @FXML TextField inputURL;
     @FXML WebView webview;
+    @FXML Circle led;
+
+    // LED fill styles depending on webview loadworker state
+    private Paint ledFillSuccess;
+    private Paint ledFillWorking;
+    private Paint ledFillFailed;
+    private Paint ledFillCancelled;
+
+    private Paint createFill(Color color) {
+        Bounds bounds = led.getBoundsInLocal();
+        double focusAngle = 0;
+        double focusDistance = 0;
+        double centerX = -bounds.getWidth() / 8;
+        double centerY = -bounds.getHeight() / 6;
+        double radius = bounds.getWidth() / 2;
+        boolean proportional = false;
+        CycleMethod cycleMethod = CycleMethod.NO_CYCLE;
+        Stop[] stops = { new Stop(0, color.interpolate(Color.WHITE, 0.8)), new Stop(1, color) };
+        return new RadialGradient(focusAngle, focusDistance, centerX, centerY, radius, proportional, cycleMethod,
+                stops);
+    }
 
     @FXML private void initialize() {
         WebEngine engine = webview.getEngine();
@@ -31,6 +61,48 @@ public class FxBrowserController {
 
         engine.onErrorProperty().set(evt -> {
             LOG_WEB.warn(evt.getMessage());
+        });
+
+        // set LED styles
+        ledFillSuccess = createFill(Color.DARKGRAY);
+        ledFillWorking = createFill(Color.GREEN);
+        ledFillFailed = createFill(Color.DARKRED);
+        ledFillCancelled = createFill(Color.YELLOW.darker());
+
+        // set LED to default style
+        led.setFill(ledFillSuccess);
+
+        engine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+            @Override
+            public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState,
+                    Worker.State newState) {
+                String location = engine.getLocation();
+
+                LOG.debug("URL[{}] - loadworker state: {} [{}]", location, newState, oldState);
+
+                // try to
+                switch (newState) {
+                case SUCCEEDED:
+                    led.setFill(ledFillSuccess);
+                    break;
+                case READY:
+                    led.setFill(ledFillSuccess);
+                    break;
+                case FAILED:
+                    led.setFill(ledFillFailed);
+                    break;
+                case SCHEDULED:
+                case RUNNING:
+                    led.setFill(ledFillWorking);
+                    break;
+                case CANCELLED:
+                    led.setFill(ledFillCancelled);
+                    break;
+                default:
+                    led.setFill(ledFillCancelled);
+                    LOG.warn("unhandled loadworker state: {}", newState);
+                }
+            }
         });
     }
 
