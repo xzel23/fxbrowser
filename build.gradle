@@ -28,19 +28,19 @@ compileJava {
 repositories {
     mavenLocal()
     jcenter()
-    maven { url 'https://jitpack.io' }
+    maven { url  "https://dl.bintray.com/dua3/public" }
 }
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    compile group: 'com.github.xzel23', name: 'utility', version: '0.8'
+    compile group: 'com.dua3', name: 'utility', version: '0.11.0'
 
     // Log4j2
     compile     group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
     compile     group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
 
     // FontAwesomeFX - icon collection [FontAweSomeFX: ASL 2.0, FontAweSome: SIL OFL 1.1 / Creative Commons]
-    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
         
     // JUnit - unit testing [EPL]
     testImplementation group: 'junit', name: 'junit', version: '4.12'
