@@ -1,18 +1,16 @@
 buildscript {
   repositories {
     maven {
-      url "https://plugins.gradle.org/m2/"
-    }
+      url  "https://dl.bintray.com/dua3/public"
+    }  
   }
-  
   dependencies {
-    // JavaFX-Gradle-Plugin (https://github.com/FibreFoX/javafx-gradle-plugin)
-    classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
+    classpath group: 'com.dua3.gradle.jpms', name: 'JpmsGradlePlugin', version: '0.2.1'
   }
 }
 
 apply plugin: 'java'
-apply plugin: 'javafx-gradle-plugin'
+apply plugin: 'com.dua3.gradle.jpms'
 
 // Show the version of Java
 println("Java version: "+JavaVersion.current());
@@ -26,21 +24,20 @@ compileJava {
 }
 
 repositories {
-    mavenLocal()
     jcenter()
     maven { url  "https://dl.bintray.com/dua3/public" }
 }
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    compile group: 'com.dua3', name: 'utility', version: '0.11.0'
+    compile group: 'com.dua3.utility', name: 'utility', version: '0.11.3'
 
     // Log4j2
-    compile     group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
-    compile     group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+    compile     group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.0'
+    compile     group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
 
     // FontAwesomeFX - icon collection [FontAweSomeFX: ASL 2.0, FontAweSome: SIL OFL 1.1 / Creative Commons]
-    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2-jdk8-1'
         
     // JUnit - unit testing [EPL]
     testImplementation group: 'junit', name: 'junit', version: '4.12'
