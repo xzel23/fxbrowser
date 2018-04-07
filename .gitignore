@@ -1,4 +1,7 @@
 log
 bin
 .gradle
+.classpath
+.project
+.settings/
 /build/
