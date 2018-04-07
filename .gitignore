@@ -4,5 +4,8 @@ bin
 .project
 .settings
 .gradle
+.classpath
+.project
+.settings/
 /build/
 **/.DS_Store
