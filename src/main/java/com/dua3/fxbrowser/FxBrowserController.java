@@ -1,7 +1,6 @@
 package com.dua3.fxbrowser;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Logger;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,8 +21,8 @@ import javafx.scene.web.WebView;
 
 public class FxBrowserController {
 
-    private static final Logger LOG = LogManager.getLogger(FxBrowser.class);
-    private static final Logger LOG_WEB = LogManager.getLogger("webview");
+    private static final Logger LOG = Logger.getLogger(FxBrowser.class.getName());
+    private static final Logger LOG_WEB = Logger.getLogger("webview");
 
     @FXML Button btnPrev;
     @FXML Button btnNext;
@@ -55,12 +54,12 @@ public class FxBrowserController {
     @FXML private void initialize() {
         WebEngine engine = webview.getEngine();
         engine .getLoadWorker().exceptionProperty().addListener((ChangeListener<Throwable>) (ov, t, t1) -> {
-            LOG_WEB.warn("loadworker exception - "+String.valueOf(t1), t1);
+            LOG_WEB.warning("loadworker exception - "+String.valueOf(t1));
             engine.loadContent(generateErrorHtml(t1));
         });
 
         engine.onErrorProperty().set(evt -> {
-            LOG_WEB.warn(evt.getMessage());
+            LOG_WEB.warning(evt.getMessage());
         });
 
         // set LED styles
@@ -78,7 +77,7 @@ public class FxBrowserController {
                     Worker.State newState) {
                 String location = engine.getLocation();
 
-                LOG.debug("URL[{}] - loadworker state: {} [{}]", location, newState, oldState);
+                LOG.fine("URL["+location+"] - loadworker state: "+newState+" ["+oldState+"]");
 
                 // try to
                 switch (newState) {
@@ -100,7 +99,7 @@ public class FxBrowserController {
                     break;
                 default:
                     led.setFill(ledFillCancelled);
-                    LOG.warn("unhandled loadworker state: {}", newState);
+                    LOG.warning("unhandled loadworker state: " + newState);
                 }
             }
         });
@@ -140,7 +139,7 @@ public class FxBrowserController {
     				location = "https://"+location;
     			}
     		}
-        LOG.info("new location: {}", location);
+        LOG.info("new location: " + location);
         webview.getEngine().load(location);
     }
 
