@@ -30,11 +30,7 @@ repositories {
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    compile group: 'com.dua3.utility', name: 'utility', version: '0.11.3'
-
-    // Log4j2
-    compile     group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
-    compile     group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+    compile group: 'com.dua3.utility', name: 'utility', version: '0.11.4'
 
     // FontAwesomeFX - icon collection [FontAweSomeFX: ASL 2.0, FontAweSome: SIL OFL 1.1 / Creative Commons]
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2-jdk8-1'
@@ -53,17 +49,6 @@ sourceSets {
         includes = []
     }
   }
-}
-
-// TODO remove once all dependencies are modularized
-compileJava {
-    doFirst {
-        options.compilerArgs = [
-            '--module-path', classpath.asPath,
-            '--add-modules', 'ALL-SYSTEM',
-            '-d', sourceSets.main.output.classesDirs.asPath
-        ]
-    }
 }
 
 jlink {
