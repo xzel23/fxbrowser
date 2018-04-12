@@ -1,6 +1,5 @@
 buildscript {
   repositories {
-  mavenLocal()
     maven {
       url  "https://dl.bintray.com/dua3/public"
     }  
