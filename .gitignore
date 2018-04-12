@@ -1,4 +1,8 @@
 log
 bin
+.classpath
+.project
+.settings
 .gradle
 /build/
+**/.DS_Store
