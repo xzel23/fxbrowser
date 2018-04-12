@@ -1,5 +1,8 @@
 package com.dua3.fxbrowser;
 
+import java.net.URL;
+import java.util.Objects;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,11 +16,11 @@ public class FxBrowser extends Application {
     public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	@Override
 	public void start(Stage stage) throws Exception {
         // create a loader
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FxBrowser.fxml"));
+        FXMLLoader loader = new FXMLLoader(getResource(getClass(), "FxBrowser.fxml"));
 
         // create the scene
         Parent root = loader.load();
@@ -28,5 +31,9 @@ public class FxBrowser extends Application {
         stage.setScene(scene);
         stage.show();
 	}
+
+    private static URL getResource(Class<?> clazz, String resource) {
+        return Objects.requireNonNull(clazz.getResource(resource), "Resource not found: "+resource);
+    }
 
 }

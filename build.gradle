@@ -56,4 +56,5 @@ jlink {
 	main = 'com.dua3.fxbrowser.FxBrowser'
 	application = 'fxbrowser'
 	compress = 2
+    debug = true
 }
