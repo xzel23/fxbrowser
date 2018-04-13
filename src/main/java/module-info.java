@@ -16,6 +16,5 @@ module com.dua3.fxbrowser {
 	requires javafx.graphics;
 	requires javafx.web;
 
-    requires transitive de.jensd.fx.glyphs.commons;
     requires transitive de.jensd.fx.glyphs.fontawesome;
 }
