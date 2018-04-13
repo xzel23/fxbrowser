@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?language javascript?>
+
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -11,53 +13,58 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 
-<?language javascript?> 
-
-<BorderPane prefHeight="528.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dua3.fxbrowser.FxBrowserController">
-   <top>
-                  <HBox>
-                     <children>
-      <ButtonBar buttonMinWidth="20.0" prefHeight="40.0" BorderPane.alignment="CENTER">
-        <buttons>
-          <Button fx:id="btnPrev" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#navigateBack" text="prev">
-               <graphic>
-                  <FontAwesomeIconView glyphName="ARROW_LEFT" size="2em" />
-               </graphic>
-            </Button>
-            <Button fx:id="btnNext" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#navigateForward" text="next">
-               <graphic>
-                  <FontAwesomeIconView glyphName="ARROW_RIGHT" size="2em" />
-               </graphic>
-            </Button>
-            <Button fx:id="btnStopReload" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" text="stop/reload">
-               <graphic>
-                  <FontAwesomeIconView glyphName="REFRESH" size="2em" />
-               </graphic>
-            </Button>
-          <Circle fx:id="led" fill="WHITE" radius="8.0" stroke="#bbbbbb" strokeType="OUTSIDE" strokeWidth="1.0" />
-        </buttons>
-      </ButtonBar>
-            <StackPane HBox.hgrow="SOMETIMES">
-               <HBox.margin>
-                  <Insets left="16.0" right="8.0" />
-               </HBox.margin>
-               <children>
-              <TextField fx:id="inputURL" onAction="onURLChange()">
-<fx:script> 
-        function onURLChange() {
-            controller.go(inputURL.getText()); 
-        } 
-</fx:script>                      
-                        <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </TextField>
-               </children>
-            </StackPane>
-        </children>
-        </HBox>
-   </top>
-   <center>
-      <WebView fx:id="webview" prefHeight="383.0" prefWidth="622.0" BorderPane.alignment="CENTER" />
-   </center>
+<BorderPane prefHeight="528.0" prefWidth="655.0"
+	xmlns="http://javafx.com/javafx/8.0.141"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.dua3.fxbrowser.FxBrowserController">
+	<top>
+		<HBox>
+			<children>
+				<ButtonBar buttonMinWidth="20.0" prefHeight="40.0"
+					BorderPane.alignment="CENTER">
+					<buttons>
+						<Button fx:id="btnPrev" contentDisplay="GRAPHIC_ONLY"
+							mnemonicParsing="false" onAction="#navigateBack" text="prev">
+							<graphic>
+								<FontAwesomeIconView glyphName="ARROW_LEFT"
+									size="2em" />
+							</graphic>
+						</Button>
+						<Button fx:id="btnNext" contentDisplay="GRAPHIC_ONLY"
+							mnemonicParsing="false" onAction="#navigateForward" text="next">
+							<graphic>
+								<FontAwesomeIconView glyphName="ARROW_RIGHT"
+									size="2em" />
+							</graphic>
+						</Button>
+						<Button fx:id="btnStopReload" contentDisplay="GRAPHIC_ONLY"
+							mnemonicParsing="false" text="stop/reload">
+							<graphic>
+								<FontAwesomeIconView glyphName="REFRESH"
+									size="2em" />
+							</graphic>
+						</Button>
+						<Circle fx:id="led" fill="WHITE" radius="8.0"
+							stroke="#bbbbbb" strokeType="OUTSIDE" strokeWidth="1.0" />
+					</buttons>
+				</ButtonBar>
+				<StackPane HBox.hgrow="SOMETIMES">
+					<HBox.margin>
+						<Insets left="16.0" right="8.0" />
+					</HBox.margin>
+					<children>
+						<TextField fx:id="inputURL" onAction="#goToInputUrl">
+							<opaqueInsets>
+								<Insets />
+							</opaqueInsets>
+						</TextField>
+					</children>
+				</StackPane>
+			</children>
+		</HBox>
+	</top>
+	<center>
+		<WebView fx:id="webview" prefHeight="383.0" prefWidth="622.0"
+			BorderPane.alignment="CENTER" />
+	</center>
 </BorderPane>

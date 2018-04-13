@@ -131,10 +131,14 @@ public class FxBrowserController {
         return buffer.toString();
     }
 
+    public void goToInputUrl() {
+        go(inputURL.getText());
+    }
+
     public void go(String location) {
     		if (!location.matches(".*://.*")) {
     			if (location.startsWith("/") || location.matches("[a-zA-Z]:[/\\\\].*")) {
-    				location = "file://" + location; 
+    				location = "file://" + location;
     			} else {
     				location = "https://"+location;
     			}
