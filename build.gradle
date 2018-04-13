@@ -15,8 +15,8 @@ apply plugin: 'com.dua3.gradle.jpms'
 // Show the version of Java
 println("Java version: "+JavaVersion.current());
 
-sourceCompatibility = 9
-targetCompatibility = 9
+sourceCompatibility = 10
+targetCompatibility = 10
 
 compileJava {
     options.encoding = 'UTF-8'
@@ -55,9 +55,8 @@ jlink {
 	module = 'com.dua3.fxbrowser'
 	main = 'com.dua3.fxbrowser.FxBrowser'
 	application = 'fxbrowser'
-	addModules = 'de.jensd.fx.glyphs.commons,de.jensd.fx.glyphs.fontawesome'
 	compress = 2
-    debug = true
+    debug = false
 }
 
 compileJava {
@@ -65,6 +64,5 @@ compileJava {
         options.compilerArgs = [
             '--module-path', classpath.asPath,
         ]
-        classpath = files()
     }
 }
