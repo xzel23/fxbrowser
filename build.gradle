@@ -35,17 +35,6 @@ dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
-sourceSets {
-  main {
-    resources {
-        srcDirs = ["src/main/java"]
-    }
-    resources {
-        srcDirs = ["src/main/resources"]
-    }
-  }
-}
-
 jlink {
 	module = 'com.dua3.fxbrowser'
 	main = 'com.dua3.fxbrowser.FxBrowser'
