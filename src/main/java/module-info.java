@@ -1,10 +1,3 @@
-/**
- *
- */
-/**
- * @author axel
- *
- */
 module com.dua3.fxbrowser {
 	exports com.dua3.fxbrowser;
 	opens com.dua3.fxbrowser;

@@ -5,22 +5,18 @@ buildscript {
     }  
   }
   dependencies {
-    classpath group: 'com.dua3.gradle.jpms', name: 'JpmsGradlePlugin', version: '0.2.2'
+    classpath group: 'com.dua3.gradle.jpms', name: 'JpmsGradlePlugin', version: '0.2.3'
   }
 }
 
 apply plugin: 'java'
 apply plugin: 'com.dua3.gradle.jpms'
 
-// Show the version of Java
-println("Java version: "+JavaVersion.current());
-
-sourceCompatibility = 10
-targetCompatibility = 10
+sourceCompatibility = 9
+targetCompatibility = 9
 
 compileJava {
     options.encoding = 'UTF-8'
-    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 repositories {
@@ -46,7 +42,6 @@ sourceSets {
     }
     resources {
         srcDirs = ["src/main/resources"]
-        includes = []
     }
   }
 }
@@ -59,10 +54,3 @@ jlink {
     debug = false
 }
 
-compileJava {
-    doFirst {
-        options.compilerArgs = [
-            '--module-path', classpath.asPath,
-        ]
-    }
-}
