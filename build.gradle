@@ -26,7 +26,7 @@ repositories {
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    compile group: 'com.dua3.utility', name: 'utility', version: '0.11.4'
+    compile group: 'com.dua3.utility', name: 'utility', version: '0.12'
 
     // FontAwesomeFX - icon collection [FontAweSomeFX: ASL 2.0, FontAweSome: SIL OFL 1.1 / Creative Commons]
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2-jdk8-1'
