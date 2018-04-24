@@ -1,16 +1,10 @@
-buildscript {
-  repositories {
-    maven {
-      url  "https://dl.bintray.com/dua3/public"
-    }  
-  }
-  dependencies {
-    classpath group: 'com.dua3.gradle.jpms', name: 'JpmsGradlePlugin', version: '0.2.3'
-  }
+plugins {
+  id "com.github.spotbugs" version "1.6.1"
+  id "com.jfrog.bintray" version "1.8.0"
+  id "com.dua3.gradle.jpms" version "0.3.1"
 }
 
 apply plugin: 'java'
-apply plugin: 'com.dua3.gradle.jpms'
 
 sourceCompatibility = 9
 targetCompatibility = 9
@@ -26,7 +20,7 @@ repositories {
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    compile group: 'com.dua3.utility', name: 'utility', version: '0.12'
+    compile group: 'com.dua3.utility', name: 'utility', version: '0.15.0'
 
     // FontAwesomeFX - icon collection [FontAweSomeFX: ASL 2.0, FontAweSome: SIL OFL 1.1 / Creative Commons]
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2-jdk8-1'
@@ -36,10 +30,13 @@ dependencies {
 }
 
 jlink {
-	module = 'com.dua3.fxbrowser'
-	main = 'com.dua3.fxbrowser.FxBrowser'
-	application = 'fxbrowser'
-	compress = 2
+    module = 'com.dua3.fxbrowser'
+    main = 'com.dua3.fxbrowser.FxBrowser'
+    application = 'fxbrowser'
+    compress = 2
     debug = false
 }
+
+// SpotBugs version 3.1.3 is needed for JDK 10 compatibility
+spotbugs.toolVersion = '3.1.3'
 
