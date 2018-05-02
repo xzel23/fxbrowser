@@ -14,6 +14,7 @@ public class FxBrowser extends Application {
     static final String APP_NAME = "FxBrowser";
 
     public static void main(String[] args) {
+        System.setProperty("java.net.useSystemProxies", "true");
 		launch(args);
 	}
 
