@@ -1,9 +1,10 @@
 plugins {
-  id "com.dua3.gradle.jpms" version "0.4.1"
-  id "com.github.spotbugs" version "1.6.3"
+  id "com.dua3.gradle.jpms" version "0.5"
+  id "com.github.spotbugs" version "1.6.5"
 }
 
 apply plugin: 'java'
+apply plugin: 'eclipse'
 
 sourceCompatibility = 11
 targetCompatibility = 11
@@ -30,7 +31,7 @@ if (currentOS.isWindows()) {
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    def utilityVersion = "1.2.0"
+    def utilityVersion = "1.2.1"
     compile "com.dua3.utility:utility:${utilityVersion}"
     
     // JavaFX
@@ -52,6 +53,3 @@ jlink {
 	compress = 2
     debug = false
 }
-
-// SpotBugs version 3.1.7 is needed for JDK 11 compatibility
-spotbugs.toolVersion = '3.1.7'
