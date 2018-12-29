@@ -1,13 +1,15 @@
 plugins {
-  id "com.dua3.gradle.jpms" version "0.5.1"
+  id 'java'
+  id 'application'
+  id 'eclipse'
+  id "com.dua3.gradle.jpms" version "0.6"
   id "com.github.spotbugs" version "1.6.5"
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
+sourceCompatibility = 8
+targetCompatibility = 8
 
-sourceCompatibility = 10
-targetCompatibility = 10
+mainClassName = 'com.dua3.fxbrowser.Main'
 
 compileJava {
     options.encoding = 'UTF-8'
@@ -31,7 +33,7 @@ if (currentOS.isWindows()) {
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    def utilityVersion = "1.2.1"
+    def utilityVersion = "1.2.4"
     compile "com.dua3.utility:utility:${utilityVersion}"
     
     // JavaFX
