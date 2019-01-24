@@ -2,12 +2,12 @@ plugins {
   id 'java'
   id 'application'
   id 'eclipse'
-  id "com.dua3.gradle.jpms" version "0.7.1"
+  id "com.dua3.gradle.jpms" version "0.8.0"
   id "com.github.spotbugs" version "1.6.5"
 }
 
-sourceCompatibility = 8
-targetCompatibility = 8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 mainClassName = 'com.dua3.fxbrowser.Main'
 
@@ -33,25 +33,31 @@ if (currentOS.isWindows()) {
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    def utilityVersion = "1.2.4"
+    def utilityVersion = "3.0"
     compile "com.dua3.utility:utility:${utilityVersion}"
     
     // JavaFX
-    compile "org.openjfx:javafx-base:11:${platform}"
-    compile "org.openjfx:javafx-fxml:11:${platform}"
-    compile "org.openjfx:javafx-graphics:11:${platform}"
-    compile "org.openjfx:javafx-controls:11:${platform}"
-    compile "org.openjfx:javafx-web:11:${platform}"
-    compile "org.openjfx:javafx-media:11:${platform}"
+    def jfxVersion = "11.0.2"
+    compile "org.openjfx:javafx-base:${jfxVersion}:${platform}"
+    compile "org.openjfx:javafx-fxml:${jfxVersion}:${platform}"
+    compile "org.openjfx:javafx-graphics:${jfxVersion}:${platform}"
+    compile "org.openjfx:javafx-controls:${jfxVersion}:${platform}"
+    compile "org.openjfx:javafx-web:${jfxVersion}:${platform}"
+    compile "org.openjfx:javafx-media:${jfxVersion}:${platform}"
 
     // FontAwesomeFX - icon collection [FontAweSomeFX: ASL 2.0, FontAweSome: SIL OFL 1.1 / Creative Commons]
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2-jpms'
 }
 
 jlink {
-	module = 'com.dua3.fxbrowser'
+	mainModule = 'com.dua3.fxbrowser'
 	main = 'com.dua3.fxbrowser.FxBrowser'
 	application = 'fxbrowser'
 	compress = 2
     debug = false
+}
+
+bundle {
+  name = 'FxBrowser'
+  appClass = 'com.dua3.fxbrowser.FxBrowser'
 }

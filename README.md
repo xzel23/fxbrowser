@@ -19,3 +19,9 @@ A simple JavaFX based webbrowser that I use for testing the WebView control and 
 ```
     ./build/dist/bin/fxbrowser
 ```
+
+* run gradle, the `bundle` task produces an appliction image (depends on your platform)
+```
+    cd fxbrowser
+    ./gradlew bundle
+```
