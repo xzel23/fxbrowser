@@ -2,9 +2,10 @@ plugins {
   id 'java'
   id 'application'
   id 'eclipse'
-  id "com.dua3.gradle.jpms" version "0.8.0"
+  id "com.dua3.gradle.jpms" version "0.8.2"
   id "com.github.spotbugs" version "1.6.5"
 }
+apply plugin: 'com.dua3.gradle.jpms'
 
 sourceCompatibility = 11
 targetCompatibility = 11
@@ -49,15 +50,15 @@ dependencies {
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2-jpms'
 }
 
-jlink {
-	mainModule = 'com.dua3.fxbrowser'
-	main = 'com.dua3.fxbrowser.FxBrowser'
-	application = 'fxbrowser'
-	compress = 2
-    debug = false
-}
-
 bundle {
+  // set bundle type: 'installer' or  'image'
+  type = 'installer' 
+  // set application name
   name = 'FxBrowser'
-  appClass = 'com.dua3.fxbrowser.FxBrowser'
+  // the class containing main() / Application class (JavaFX)
+  main = 'com.dua3.fxbrowser.FxBrowser'
+  // the module containing the main class
+  mainModule = 'com.dua3.fxbrowser'
+  // the version
+  version = '1.0'
 }
