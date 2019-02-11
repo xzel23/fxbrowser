@@ -52,7 +52,7 @@ dependencies {
 
 bundle {
   // set bundle type: 'installer' or  'image'
-  type = 'installer' 
+  type = 'image'
   // set application name
   name = 'FxBrowser'
   // the class containing main() / Application class (JavaFX)
