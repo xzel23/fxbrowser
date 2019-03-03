@@ -3,7 +3,7 @@ plugins {
   id 'application'
   id 'eclipse'
   id "com.dua3.gradle.jpms" version "0.8.2"
-  id "com.github.spotbugs" version "1.6.5"
+  id "com.github.spotbugs" version "1.6.10"
 }
 apply plugin: 'com.dua3.gradle.jpms'
 
@@ -19,6 +19,7 @@ compileJava {
 repositories {
     jcenter()
     maven { url  "https://dl.bintray.com/dua3/public" }
+    mavenLocal()
 }
 
 // get OS (because JavaFX packages are OS dependent)
@@ -34,7 +35,7 @@ if (currentOS.isWindows()) {
 
 dependencies {
     // utility - collection  of utility classes (my own code)  [ASL 2.0]
-    def utilityVersion = "3.0"
+    def utilityVersion = "4.0.0-BETA1"
     compile "com.dua3.utility:utility:${utilityVersion}"
     
     // JavaFX
@@ -60,5 +61,7 @@ bundle {
   // the module containing the main class
   mainModule = 'com.dua3.fxbrowser'
   // the version
-  version = '1.0'
+  version = new Date().format('yyyyMMddHHmmss')
 }
+
+defaultTasks 'build'
