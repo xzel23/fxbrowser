@@ -5,12 +5,19 @@ plugins {
   id "com.dua3.gradle.jpms" version "0.8.3"
   id "com.github.spotbugs" version "1.6.10"
 }
+
 apply plugin: 'com.dua3.gradle.jpms'
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = java_version
+targetCompatibility = java_version
+
+  ext.versionSuffix = project.hasProperty('release') ? "" : "-SNAPSHOT"
 
 mainClassName = 'com.dua3.fxbrowser.Main'
+
+  // handle snapshot versions
+  dua3_utility_version = "${dua3_utility_version}${versionSuffix}"
+  dua3_fx_version = "${dua3_fx_version}${versionSuffix}"
 
 compileJava {
     options.encoding = 'UTF-8'
@@ -22,19 +29,30 @@ repositories {
     mavenLocal()
 }
 
-dependencies {
-    compile "com.dua3.utility:utility.db:${System.properties['com.dua3.utility.version']}"
-    
-    compile "com.dua3.fx:fx.util:${System.properties['com.dua3.fx.version']}"
-    compile "com.dua3.fx:fx.controls:${System.properties['com.dua3.fx.version']}"
-    compile "com.dua3.fx:fx.application:${System.properties['com.dua3.fx.version']}"
+  // get OS (because JavaFX packages are OS dependent)
+  def currentOS = org.gradle.internal.os.OperatingSystem.current()
+  if (currentOS.isWindows()) {
+    ext.platform = 'win'
+  } else if (currentOS.isLinux()) {
+    ext.platform = 'linux'
+  } else if (currentOS.isMacOsX()) {
+    ext.platform = 'mac'
+  }
 
-    compile "org.openjfx:javafx-base:${System.properties['javafx.version']}:${System.properties['javafx.platform']}"
-    compile "org.openjfx:javafx-fxml:${System.properties['javafx.version']}:${System.properties['javafx.platform']}"
-    compile "org.openjfx:javafx-graphics:${System.properties['javafx.version']}:${System.properties['javafx.platform']}"
-    compile "org.openjfx:javafx-controls:${System.properties['javafx.version']}:${System.properties['javafx.platform']}"
-    compile "org.openjfx:javafx-web:${System.properties['javafx.version']}:${System.properties['javafx.platform']}"
-    compile "org.openjfx:javafx-media:${System.properties['javafx.version']}:${System.properties['javafx.platform']}"
+dependencies {
+    compile "com.dua3.utility:utility:${dua3_utility_version}"
+    
+    compile "com.dua3.fx:fx-util:${dua3_fx_version}"
+    compile "com.dua3.fx:fx-editors:${dua3_fx_version}"
+    compile "com.dua3.fx:fx-controls:${dua3_fx_version}"
+    compile "com.dua3.fx:fx-application:${dua3_fx_version}"
+
+    compile "org.openjfx:javafx-base:${javafx_version}:${platform}"
+    compile "org.openjfx:javafx-fxml:${javafx_version}:${platform}"
+    compile "org.openjfx:javafx-graphics:${javafx_version}:${platform}"
+    compile "org.openjfx:javafx-controls:${javafx_version}:${platform}"
+    compile "org.openjfx:javafx-web:${javafx_version}:${platform}"
+    compile "org.openjfx:javafx-media:${javafx_version}:${platform}"
 
     // FontAwesomeFX - icon collection [FontAweSomeFX: ASL 2.0, FontAweSome: SIL OFL 1.1 / Creative Commons]
     compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2-jpms'
