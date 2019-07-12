@@ -1,23 +1,27 @@
 plugins {
-  id 'java'
-  id 'application'
-  id 'eclipse'
-  id "com.dua3.gradle.jpms" version "0.8.3"
-  id "com.github.spotbugs" version "1.6.10"
+    id 'java'
+    id 'application'
+    id 'eclipse'
+    id 'idea'
+    id "com.dua3.gradle.jpms" version "0.8.3"
+    id "com.github.spotbugs" version "1.6.10"
 }
 
 apply plugin: 'com.dua3.gradle.jpms'
 
-sourceCompatibility = java_version
-targetCompatibility = java_version
-
-  ext.versionSuffix = project.hasProperty('release') ? "" : "-SNAPSHOT"
+sourceCompatibility = 11
+targetCompatibility = 11
 
 mainClassName = 'com.dua3.fxbrowser.Main'
 
-  // handle snapshot versions
-  dua3_utility_version = "${dua3_utility_version}${versionSuffix}"
-  dua3_fx_version = "${dua3_fx_version}${versionSuffix}"
+ext {
+    java_version = '11'
+    javafx_version = '12.0.1'
+    junit_version = '5.3.1'
+
+    dua3_utility_version = '4.0.1'
+    dua3_fx_version = '0.4.2'
+}
 
 compileJava {
     options.encoding = 'UTF-8'
@@ -25,23 +29,23 @@ compileJava {
 
 repositories {
     jcenter()
-    maven { url  "https://dl.bintray.com/dua3/public" }
+    maven { url "https://dl.bintray.com/dua3/public" }
     mavenLocal()
 }
 
-  // get OS (because JavaFX packages are OS dependent)
-  def currentOS = org.gradle.internal.os.OperatingSystem.current()
-  if (currentOS.isWindows()) {
+// get OS (because JavaFX packages are OS dependent)
+def currentOS = org.gradle.internal.os.OperatingSystem.current()
+if (currentOS.isWindows()) {
     ext.platform = 'win'
-  } else if (currentOS.isLinux()) {
+} else if (currentOS.isLinux()) {
     ext.platform = 'linux'
-  } else if (currentOS.isMacOsX()) {
+} else if (currentOS.isMacOsX()) {
     ext.platform = 'mac'
-  }
+}
 
 dependencies {
     compile "com.dua3.utility:utility:${dua3_utility_version}"
-    
+
     compile "com.dua3.fx:fx-util:${dua3_fx_version}"
     compile "com.dua3.fx:fx-editors:${dua3_fx_version}"
     compile "com.dua3.fx:fx-controls:${dua3_fx_version}"
@@ -59,16 +63,16 @@ dependencies {
 }
 
 bundle {
-  // set bundle type: 'installer' or  'image'
-  type = 'image'
-  // set application name
-  name = 'FxBrowser'
-  // the class containing main() / Application class (JavaFX)
-  main = 'com.dua3.fxbrowser.FxBrowser'
-  // the module containing the main class
-  mainModule = 'com.dua3.fxbrowser'
-  // the version
-  version = new Date().format('yyyyMMddHHmmss')
+    // set bundle type: 'installer' or  'image'
+    type = 'image'
+    // set application name
+    name = 'FxBrowser'
+    // the class containing main() / Application class (JavaFX)
+    main = 'com.dua3.fxbrowser.FxBrowser'
+    // the module containing the main class
+    mainModule = 'com.dua3.fxbrowser'
+    // the version
+    version = new Date().format('yyyyMMddHHmmss')
 }
 
 defaultTasks 'build'
