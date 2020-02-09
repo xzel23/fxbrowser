@@ -1,4 +1,4 @@
-module com.dua3.fxbrowser {
+module fxbrowser {
 	exports com.dua3.fxbrowser;
 	opens com.dua3.fxbrowser;
 
@@ -9,5 +9,8 @@ module com.dua3.fxbrowser {
 	requires javafx.graphics;
 	requires javafx.web;
 
-    requires transitive de.jensd.fx.glyphs.fontawesome;
+	requires dua3_utility;
+	
+	requires org.kordamp.iconli.core;
+	requires org.kordamp.ikonli.fontawesome;
 }

@@ -53,6 +53,7 @@ public class FxBrowserController {
 
     @FXML private void initialize() {
         WebEngine engine = webview.getEngine();
+//        engine.setUserAgent("WebKit/605.1.15");
         engine .getLoadWorker().exceptionProperty().addListener((ChangeListener<Throwable>) (ov, t, t1) -> {
             LOG_WEB.warning("loadworker exception - "+String.valueOf(t1));
             engine.loadContent(generateErrorHtml(t1));

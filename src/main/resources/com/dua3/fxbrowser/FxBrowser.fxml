@@ -2,7 +2,7 @@
 
 <?language javascript?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import com.dua3.fx.icons.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
@@ -26,22 +26,19 @@
 						<Button fx:id="btnPrev" contentDisplay="GRAPHIC_ONLY"
 							mnemonicParsing="false" onAction="#navigateBack" text="prev">
 							<graphic>
-								<FontAwesomeIconView glyphName="ARROW_LEFT"
-									size="2em" />
+								<IconView iconIdentifier="fa-arrow-left" iconSize="24" />
 							</graphic>
 						</Button>
 						<Button fx:id="btnNext" contentDisplay="GRAPHIC_ONLY"
 							mnemonicParsing="false" onAction="#navigateForward" text="next">
 							<graphic>
-								<FontAwesomeIconView glyphName="ARROW_RIGHT"
-									size="2em" />
+								<IconView iconIdentifier="fa-arrow-right" iconSize="24" />
 							</graphic>
 						</Button>
 						<Button fx:id="btnStopReload" contentDisplay="GRAPHIC_ONLY"
 							mnemonicParsing="false" text="stop/reload">
 							<graphic>
-								<FontAwesomeIconView glyphName="REFRESH"
-									size="2em" />
+								<IconView iconIdentifier="fa-refresh" iconSize="24" />
 							</graphic>
 						</Button>
 						<Circle fx:id="led" fill="WHITE" radius="8.0"
