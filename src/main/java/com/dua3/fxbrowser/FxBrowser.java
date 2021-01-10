@@ -1,8 +1,5 @@
 package com.dua3.fxbrowser;
 
-import java.net.URL;
-import java.util.Objects;
-
 import com.dua3.utility.lang.LangUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
