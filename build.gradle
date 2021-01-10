@@ -3,11 +3,9 @@ plugins {
     id 'application'
     id 'eclipse'
     id 'idea'
-    id "com.dua3.gradle.jpms" version "1.0"
+    id "com.dua3.gradle.jpms" version "1.1"
     id "com.github.spotbugs" version "4.0.5"
 }
-
-apply plugin: 'com.dua3.gradle.jpms'
 
 // place resources in same directory as classes (fix resource not found in IntelliJ run/debug)
 sourceSets {
@@ -27,10 +25,10 @@ idea {
 sourceCompatibility = 11
 targetCompatibility = 11
 
-mainClassName = 'com.dua3.fxbrowser.Main'
+mainClassName = 'com.dua3.fxbrowser.FxBrowser'
 
 ext {
-    java_version = '15'
+    java_version = '11'
     javafx_version = '15'
     junit_version = '5.3.1'
 
