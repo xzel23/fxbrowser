@@ -2,9 +2,8 @@ plugins {
     id 'java'
     id 'application'
     id 'idea'
-    id "org.openjfx.javafxplugin" version '0.0.9'
-    id "com.dua3.gradle.jpms" version "1.1"
-    id "com.github.spotbugs" version "4.0.5"
+    id "org.openjfx.javafxplugin" version '0.0.10'
+    id "com.github.spotbugs" version "4.7.2"
 }
 
 // place resources in same directory as classes (fix resource not found in IntelliJ run/debug)
@@ -22,26 +21,22 @@ idea {
     }
 }
 
-java {
-    modularity.inferModulePath = true
-}
-
 javafx {
-    version = '15'
+    version = '17.0.0.1'
     modules = [ 'javafx.web', 'javafx.controls', 'javafx.fxml' ]
 }
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 17
+targetCompatibility = 17
 
 mainClassName = 'com.dua3.fxbrowser.FxBrowser'
 
 ext {
     junit_version = '5.3.1'
 
-    dua3_utility_version = '8'
-    dua3_fx_version = '0.14-BETA3'
-    ikonli_version = '11.5.0'
+    dua3_utility_version = '10-BETA9'
+    dua3_fx_version = '0.17-BETA9'
+    ikonli_version = '12.2.0'
 }
 
 compileJava {
@@ -49,36 +44,23 @@ compileJava {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven { url "https://dl.bintray.com/dua3/public" }
     mavenLocal()
 }
 
 dependencies {
-    compile "com.dua3.utility:utility:${dua3_utility_version}"
+    implementation "com.dua3.utility:utility:${dua3_utility_version}"
 
-    compile "com.dua3.fx:fx-util:${dua3_fx_version}"
-    compile "com.dua3.fx:fx-controls:${dua3_fx_version}"
-    compile "com.dua3.fx:fx-application:${dua3_fx_version}"
-    compile "com.dua3.fx:fx-icons:${dua3_fx_version}"
-    compile "com.dua3.fx:fx-icons-ikonli:${dua3_fx_version}"
+    implementation "com.dua3.fx:fx-util:${dua3_fx_version}"
+    implementation "com.dua3.fx:fx-controls:${dua3_fx_version}"
+    implementation "com.dua3.fx:fx-application:${dua3_fx_version}"
+    implementation "com.dua3.fx:fx-icons:${dua3_fx_version}"
+    implementation "com.dua3.fx:fx-icons-ikonli:${dua3_fx_version}"
      
-    compile "org.kordamp.ikonli:ikonli-core:${ikonli_version}"
-    compile "org.kordamp.ikonli:ikonli-javafx:${ikonli_version}"
-    compile "org.kordamp.ikonli:ikonli-fontawesome-pack:${ikonli_version}"
-}
-
-jigsaw {
-    // set bundle type: 'installer' or  'image'
-    bundleType = 'image'
-    // set application name
-    bundleName = 'FxBrowser'
-    // the module containing the main class
-    module = 'com.dua3.fxbrowser'
-    // the class containing main() / Application class (JavaFX)
-    main = 'com.dua3.fxbrowser.FxBrowser'
-    // the version
-    version = new Date().format('yyyyMMddHHmmss')
+    implementation "org.kordamp.ikonli:ikonli-core:${ikonli_version}"
+    implementation "org.kordamp.ikonli:ikonli-javafx:${ikonli_version}"
+    implementation "org.kordamp.ikonli:ikonli-fontawesome-pack:${ikonli_version}"
 }
 
 defaultTasks 'build'
