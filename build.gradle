@@ -1,9 +1,8 @@
 plugins {
-    id 'java'
-    id 'application'
-    id 'idea'
-    id "org.openjfx.javafxplugin" version '0.0.10'
-    id "com.github.spotbugs" version "4.7.2"
+    id "java"
+    id "application"
+    id "idea"
+    id "org.openjfx.javafxplugin" version '0.1.0'
 }
 
 // place resources in same directory as classes (fix resource not found in IntelliJ run/debug)
@@ -22,21 +21,21 @@ idea {
 }
 
 javafx {
-    version = '17.0.0.1'
-    modules = [ 'javafx.web', 'javafx.controls', 'javafx.fxml' ]
+    version = '21.0.1'
+    modules = ['javafx.web', 'javafx.controls', 'javafx.fxml']
 }
 
-sourceCompatibility = 17
-targetCompatibility = 17
+sourceCompatibility = 21
+targetCompatibility = 21
 
 mainClassName = 'com.dua3.fxbrowser.FxBrowser'
 
 ext {
-    junit_version = '5.3.1'
+    junit_version = '5.10.1'
 
-    dua3_utility_version = '10-BETA9'
-    dua3_fx_version = '0.17-BETA9'
-    ikonli_version = '12.2.0'
+    dua3_utility_version = '11.1.3'
+    dua3_fx_version = '0.30.2'
+    ikonli_version = '12.3.1'
 }
 
 compileJava {
@@ -45,7 +44,6 @@ compileJava {
 
 repositories {
     mavenCentral()
-    maven { url "https://dl.bintray.com/dua3/public" }
     mavenLocal()
 }
 
@@ -57,7 +55,7 @@ dependencies {
     implementation "com.dua3.fx:fx-application:${dua3_fx_version}"
     implementation "com.dua3.fx:fx-icons:${dua3_fx_version}"
     implementation "com.dua3.fx:fx-icons-ikonli:${dua3_fx_version}"
-     
+
     implementation "org.kordamp.ikonli:ikonli-core:${ikonli_version}"
     implementation "org.kordamp.ikonli:ikonli-javafx:${ikonli_version}"
     implementation "org.kordamp.ikonli:ikonli-fontawesome-pack:${ikonli_version}"

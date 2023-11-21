@@ -13,11 +13,12 @@ public class FxBrowser extends Application {
 
     public static void main(String[] args) {
         System.setProperty("java.net.useSystemProxies", "true");
-		launch(args);
-	}
+        System.setProperty("javafx.allowjs", "true");
+        launch(args);
+    }
 
-	@Override
-	public void start(Stage stage) throws Exception {
+    @Override
+    public void start(Stage stage) throws Exception {
         // create a loader
         FXMLLoader loader = new FXMLLoader(LangUtil.getResourceURL(getClass(), "FxBrowser.fxml"));
 
@@ -29,6 +30,6 @@ public class FxBrowser extends Application {
         stage.setTitle(APP_NAME);
         stage.setScene(scene);
         stage.show();
-	}
-	
+    }
+
 }
