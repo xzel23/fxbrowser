@@ -1,10 +1,5 @@
 package com.dua3.fxbrowser;
 
-import java.util.logging.Logger;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
@@ -19,17 +14,25 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
 
+import java.util.logging.Logger;
+
 public class FxBrowserController {
 
-    private static final Logger LOG = Logger.getLogger(FxBrowser.class.getName());
+    private static final Logger LOG = Logger.getLogger(FxBrowserController.class.getName());
     private static final Logger LOG_WEB = Logger.getLogger("webview");
 
-    @FXML Button btnPrev;
-    @FXML Button btnNext;
-    @FXML Button btnStopReload;
-    @FXML TextField inputURL;
-    @FXML WebView webview;
-    @FXML Circle led;
+    @FXML
+    Button btnPrev;
+    @FXML
+    Button btnNext;
+    @FXML
+    Button btnStopReload;
+    @FXML
+    TextField inputURL;
+    @FXML
+    WebView webview;
+    @FXML
+    Circle led;
 
     // LED fill styles depending on webview loadworker state
     private Paint ledFillSuccess;
@@ -46,22 +49,20 @@ public class FxBrowserController {
         double radius = bounds.getWidth() / 2;
         boolean proportional = false;
         CycleMethod cycleMethod = CycleMethod.NO_CYCLE;
-        Stop[] stops = { new Stop(0, color.interpolate(Color.WHITE, 0.8)), new Stop(1, color) };
+        Stop[] stops = {new Stop(0, color.interpolate(Color.WHITE, 0.8)), new Stop(1, color)};
         return new RadialGradient(focusAngle, focusDistance, centerX, centerY, radius, proportional, cycleMethod,
                 stops);
     }
 
-    @FXML private void initialize() {
+    @FXML
+    private void initialize() {
         WebEngine engine = webview.getEngine();
-//        engine.setUserAgent("WebKit/605.1.15");
-        engine .getLoadWorker().exceptionProperty().addListener((ChangeListener<Throwable>) (ov, t, t1) -> {
-            LOG_WEB.warning("loadworker exception - "+String.valueOf(t1));
+        engine.getLoadWorker().exceptionProperty().addListener((ov, t, t1) -> {
+            LOG_WEB.warning("loadworker exception - " + t1);
             engine.loadContent(generateErrorHtml(t1));
         });
 
-        engine.onErrorProperty().set(evt -> {
-            LOG_WEB.warning(evt.getMessage());
-        });
+        engine.onErrorProperty().set(evt -> LOG_WEB.warning(evt.getMessage()));
 
         // set LED styles
         ledFillSuccess = createFill(Color.DARKGRAY);
@@ -72,16 +73,13 @@ public class FxBrowserController {
         // set LED to default style
         led.setFill(ledFillSuccess);
 
-        engine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
-            @Override
-            public void changed(ObservableValue<? extends Worker.State> ov, Worker.State oldState,
-                    Worker.State newState) {
-                String location = engine.getLocation();
+        engine.getLoadWorker().stateProperty().addListener((ov, oldState, newState) -> {
+            String location = engine.getLocation();
 
-                LOG.fine("URL["+location+"] - loadworker state: "+newState+" ["+oldState+"]");
+            LOG.fine("URL[" + location + "] - loadworker state: " + newState + " [" + oldState + "]");
 
-                // try to
-                switch (newState) {
+            // try to
+            switch (newState) {
                 case SUCCEEDED:
                     led.setFill(ledFillSuccess);
                     break;
@@ -101,16 +99,20 @@ public class FxBrowserController {
                 default:
                     led.setFill(ledFillCancelled);
                     LOG.warning("unhandled loadworker state: " + newState);
-                }
             }
         });
     }
 
-    private String generateErrorHtml(Throwable t1) {
+    private static String generateErrorHtml(Throwable t1) {
         StringBuilder buffer = new StringBuilder(4096);
 
-        buffer.append("<!DOCTYPE html>\n" + "<html lang=\"en\">\n" + "<head>\n" + "<meta charset=\"utf-8\">\n"
-                + "</head>" + "<body>\n");
+        buffer.append("""
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                <meta charset="utf-8">
+                </head><body>
+                """);
 
         // message
         buffer.append("<h1>Error</h1>\n");
@@ -127,7 +129,10 @@ public class FxBrowserController {
             }
             buffer.append("</code></pre>\n");
         }
-        buffer.append("  </body>\n" + "</html>\n");
+        buffer.append("""
+                  </body>
+                </html>
+                """);
 
         return buffer.toString();
     }
@@ -137,13 +142,13 @@ public class FxBrowserController {
     }
 
     public void go(String location) {
-    		if (!location.matches(".*://.*")) {
-    			if (location.startsWith("/") || location.matches("[a-zA-Z]:[/\\\\].*")) {
-    				location = "file://" + location;
-    			} else {
-    				location = "https://"+location;
-    			}
-    		}
+        if (!location.matches(".*://.*")) {
+            if (location.startsWith("/") || location.matches("[a-zA-Z]:[/\\\\].*")) {
+                location = "file://" + location;
+            } else {
+                location = "https://" + location;
+            }
+        }
         LOG.info("new location: " + location);
         webview.getEngine().load(location);
     }
@@ -151,7 +156,7 @@ public class FxBrowserController {
     public void navigateBack() {
         LOG.info("navigate back");
         WebHistory history = webview.getEngine().getHistory();
-        if (history.getCurrentIndex()>0) {
+        if (history.getCurrentIndex() > 0) {
             history.go(-1);
         }
     }
@@ -159,7 +164,7 @@ public class FxBrowserController {
     public void navigateForward() {
         LOG.info("navigate forward");
         WebHistory history = webview.getEngine().getHistory();
-        if (history.getCurrentIndex()<history.getEntries().size()-1) {
+        if (history.getCurrentIndex() < history.getEntries().size() - 1) {
             history.go(1);
         }
     }
