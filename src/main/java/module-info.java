@@ -10,7 +10,7 @@ module fxbrowser {
     requires javafx.web;
 
     requires com.dua3.utility;
-    requires com.dua3.fx.icons;
+    requires com.dua3.utility.fx;
 
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.fontawesome;

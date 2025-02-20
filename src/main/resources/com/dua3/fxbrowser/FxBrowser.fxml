@@ -2,7 +2,7 @@
 
 <?language javascript?>
 
-<?import com.dua3.fx.icons.*?>
+<?import com.dua3.utility.fx.icons.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
