@@ -1,27 +1,26 @@
 # fxbrowser
 
-A simple JavaFX based webbrowser that I use for testing the WebView control and also as a test project for my [gradle plugin](https://github.com/xzel23/JpmsGradlePlugin).
+A minimal JavaFX based webbrowser that I use for testing the WebView control.
 
 ## Building and running the project
 
 * clone the project
+
 ```
     git clone https://github.com/xzel23/fxbrowser.git
 ```
 
-* run gradle, the `jlink` task produces a standalone application
+* run gradle, the `run` task compiles and runs the application
+
 ```
     cd fxbrowser
-    ./gradlew jlink
+    ./gradlew run
 ```
 
-* after building, start the program
-```
-    ./build/dist/bin/fxbrowser
-```
+* run gradle, the `jpackge` task produces an appliction installer in the build/jpackage folder (on Windows, you need to 
+  install the WiX toolset first)
 
-* run gradle, the `bundle` task produces an appliction image (depends on your platform)
 ```
     cd fxbrowser
-    ./gradlew bundle
+    ./gradlew jpackage
 ```
