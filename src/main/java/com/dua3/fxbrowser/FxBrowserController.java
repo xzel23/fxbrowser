@@ -1,11 +1,9 @@
 package com.dua3.fxbrowser;
 
-import com.dua3.utility.fx.icons.IconView;
+import com.dua3.utility.fx.controls.Controls;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -20,7 +18,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 import javafx.scene.web.WebView;
+import org.kordamp.ikonli.fontawesome.FontAwesome;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FxBrowserController {
@@ -28,9 +28,6 @@ public class FxBrowserController {
     private static final Logger LOG = Logger.getLogger(FxBrowserController.class.getName());
     private static final Logger LOG_WEB = Logger.getLogger("webview");
 
-    Button btnPrev;
-    Button btnNext;
-    Button btnStopReload;
     TextField inputURL;
     WebView webview;
     Circle led;
@@ -48,35 +45,7 @@ public class FxBrowserController {
 
     private void createView() {
         // --- Top ---
-        btnPrev = new Button("prev");
-        btnPrev.setId("btnPrev");
-        btnPrev.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        btnPrev.setMnemonicParsing(false);
-        btnPrev.setOnAction(e -> navigateBack());
-        IconView iconPrev = new IconView();
-        iconPrev.setIconIdentifier("fa-arrow-left");
-        iconPrev.setIconSize(24);
-        btnPrev.setGraphic(iconPrev);
-
-        btnNext = new Button("next");
-        btnNext.setId("btnNext");
-        btnNext.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        btnNext.setMnemonicParsing(false);
-        btnNext.setOnAction(e -> navigateForward());
-        IconView iconNext = new IconView();
-        iconNext.setIconIdentifier("fa-arrow-right");
-        iconNext.setIconSize(24);
-        btnNext.setGraphic(iconNext);
-
-        btnStopReload = new Button("stop/reload");
-        btnStopReload.setId("btnStopReload");
-        btnStopReload.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        btnStopReload.setMnemonicParsing(false);
-        btnStopReload.setOnAction(e -> reload());
-        IconView iconStop = new IconView();
-        iconStop.setIconIdentifier("fa-refresh");
-        iconStop.setIconSize(24);
-        btnStopReload.setGraphic(iconStop);
+        int buttonSize = 24;
 
         led = new Circle(8.0, Color.WHITE);
         led.setId("led");
@@ -86,7 +55,14 @@ public class FxBrowserController {
         ButtonBar buttonBar = new ButtonBar();
         buttonBar.setButtonMinWidth(20.0);
         buttonBar.setPrefHeight(40.0);
-        buttonBar.getButtons().addAll(btnPrev, btnNext, btnStopReload, led);
+
+        buttonBar.getButtons().addAll(
+                Controls.button().graphic(Controls.graphic(FontAwesome.ARROW_LEFT.getDescription(), buttonSize)).action(this::navigateBack).build(),
+                Controls.button().graphic(Controls.graphic(FontAwesome.ARROW_RIGHT.getDescription(), buttonSize)).action(this::navigateForward).build(),
+                Controls.button().graphic(Controls.graphic(FontAwesome.REFRESH.getDescription(), buttonSize)).action(this::reload).build(),
+                led
+        );
+
         BorderPane.setAlignment(buttonBar, javafx.geometry.Pos.CENTER);
 
         inputURL = new TextField();
@@ -112,11 +88,6 @@ public class FxBrowserController {
         root.setPrefWidth(655.0);
     }
 
-    private Paint ledFillSuccess;
-    private Paint ledFillWorking;
-    private Paint ledFillFailed;
-    private Paint ledFillCancelled;
-
     private Paint createFill(Color color) {
         Bounds bounds = led.getBoundsInLocal();
         double focusAngle = 0;
@@ -141,10 +112,10 @@ public class FxBrowserController {
         engine.onErrorProperty().set(evt -> LOG_WEB.warning(evt.getMessage()));
 
         // set LED styles
-        ledFillSuccess = createFill(Color.DARKGRAY);
-        ledFillWorking = createFill(Color.GREEN);
-        ledFillFailed = createFill(Color.DARKRED);
-        ledFillCancelled = createFill(Color.YELLOW.darker());
+        Paint ledFillSuccess = createFill(Color.DARKGRAY);
+        Paint ledFillWorking = createFill(Color.GREEN);
+        Paint ledFillFailed = createFill(Color.DARKRED);
+        Paint ledFillCancelled = createFill(Color.YELLOW.darker());
 
         // set LED to default style
         led.setFill(ledFillSuccess);
@@ -225,7 +196,7 @@ public class FxBrowserController {
                 location = "https://" + location;
             }
         }
-        LOG.info("new location: " + location);
+        LOG.log(Level.INFO, "new location: {0}", location);
         webview.getEngine().load(location);
     }
 
