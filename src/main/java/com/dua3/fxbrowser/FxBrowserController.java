@@ -127,25 +127,15 @@ public class FxBrowserController {
 
             // try to
             switch (newState) {
-                case SUCCEEDED:
-                    led.setFill(ledFillSuccess);
-                    break;
-                case READY:
-                    led.setFill(ledFillSuccess);
-                    break;
-                case FAILED:
-                    led.setFill(ledFillFailed);
-                    break;
-                case SCHEDULED:
-                case RUNNING:
-                    led.setFill(ledFillWorking);
-                    break;
-                case CANCELLED:
-                    led.setFill(ledFillCancelled);
-                    break;
-                default:
+                case SUCCEEDED -> led.setFill(ledFillSuccess);
+                case READY -> led.setFill(ledFillSuccess);
+                case FAILED -> led.setFill(ledFillFailed);
+                case SCHEDULED, RUNNING -> led.setFill(ledFillWorking);
+                case CANCELLED -> led.setFill(ledFillCancelled);
+                default -> {
                     led.setFill(ledFillCancelled);
                     LOG.warning("unhandled loadworker state: " + newState);
+                }
             }
         });
     }
