@@ -1,9 +1,6 @@
 package com.dua3.fxbrowser;
 
-import com.dua3.utility.lang.LangUtil;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -18,13 +15,12 @@ public class FxBrowser extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        // create a loader
-        FXMLLoader loader = new FXMLLoader(LangUtil.getResourceURL(getClass(), "FxBrowser.fxml"));
+    public void start(Stage stage) {
+        // create the controller
+        FxBrowserController controller = new FxBrowserController();
 
         // create the scene
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(controller.getRoot());
 
         // setup stage
         stage.setTitle(APP_NAME);

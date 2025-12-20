@@ -1,9 +1,16 @@
 package com.dua3.fxbrowser;
 
-import javafx.fxml.FXML;
+import com.dua3.utility.fx.icons.IconView;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.Paint;
@@ -21,20 +28,90 @@ public class FxBrowserController {
     private static final Logger LOG = Logger.getLogger(FxBrowserController.class.getName());
     private static final Logger LOG_WEB = Logger.getLogger("webview");
 
-    @FXML
     Button btnPrev;
-    @FXML
     Button btnNext;
-    @FXML
     Button btnStopReload;
-    @FXML
     TextField inputURL;
-    @FXML
     WebView webview;
-    @FXML
     Circle led;
 
-    // LED fill styles depending on webview loadworker state
+    private final BorderPane root = new BorderPane();
+
+    public FxBrowserController() {
+        createView();
+        initialize();
+    }
+
+    public BorderPane getRoot() {
+        return root;
+    }
+
+    private void createView() {
+        // --- Top ---
+        btnPrev = new Button("prev");
+        btnPrev.setId("btnPrev");
+        btnPrev.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        btnPrev.setMnemonicParsing(false);
+        btnPrev.setOnAction(e -> navigateBack());
+        IconView iconPrev = new IconView();
+        iconPrev.setIconIdentifier("fa-arrow-left");
+        iconPrev.setIconSize(24);
+        btnPrev.setGraphic(iconPrev);
+
+        btnNext = new Button("next");
+        btnNext.setId("btnNext");
+        btnNext.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        btnNext.setMnemonicParsing(false);
+        btnNext.setOnAction(e -> navigateForward());
+        IconView iconNext = new IconView();
+        iconNext.setIconIdentifier("fa-arrow-right");
+        iconNext.setIconSize(24);
+        btnNext.setGraphic(iconNext);
+
+        btnStopReload = new Button("stop/reload");
+        btnStopReload.setId("btnStopReload");
+        btnStopReload.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        btnStopReload.setMnemonicParsing(false);
+        btnStopReload.setOnAction(e -> reload());
+        IconView iconStop = new IconView();
+        iconStop.setIconIdentifier("fa-refresh");
+        iconStop.setIconSize(24);
+        btnStopReload.setGraphic(iconStop);
+
+        led = new Circle(8.0, Color.WHITE);
+        led.setId("led");
+        led.setStroke(Color.web("#bbbbbb"));
+        led.setStrokeWidth(1.0);
+
+        ButtonBar buttonBar = new ButtonBar();
+        buttonBar.setButtonMinWidth(20.0);
+        buttonBar.setPrefHeight(40.0);
+        buttonBar.getButtons().addAll(btnPrev, btnNext, btnStopReload, led);
+        BorderPane.setAlignment(buttonBar, javafx.geometry.Pos.CENTER);
+
+        inputURL = new TextField();
+        inputURL.setId("inputURL");
+        inputURL.setOnAction(e -> goToInputUrl());
+
+        StackPane stackPane = new StackPane(inputURL);
+        HBox.setHgrow(stackPane, Priority.SOMETIMES);
+        HBox.setMargin(stackPane, new Insets(0, 8.0, 0, 16.0));
+
+        HBox topHBox = new HBox(buttonBar, stackPane);
+        root.setTop(topHBox);
+
+        // --- Center ---
+        webview = new WebView();
+        webview.setId("webview");
+        webview.setPrefHeight(383.0);
+        webview.setPrefWidth(622.0);
+        BorderPane.setAlignment(webview, javafx.geometry.Pos.CENTER);
+        root.setCenter(webview);
+
+        root.setPrefHeight(528.0);
+        root.setPrefWidth(655.0);
+    }
+
     private Paint ledFillSuccess;
     private Paint ledFillWorking;
     private Paint ledFillFailed;
@@ -54,7 +131,6 @@ public class FxBrowserController {
                 stops);
     }
 
-    @FXML
     private void initialize() {
         WebEngine engine = webview.getEngine();
         engine.getLoadWorker().exceptionProperty().addListener((ov, t, t1) -> {
