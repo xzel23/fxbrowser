@@ -14,7 +14,7 @@ application {
 }
 
 jdk {
-    version = "25"
+    version = "21" // native image will not work on 25!
     javaFxBundled = true
     nativeImageCapable = true
 }
