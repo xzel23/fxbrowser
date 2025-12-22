@@ -25,10 +25,13 @@ jlink {
 
 graalvmNative {
     binaries {
+        all {
+            resources.autodetect()
+            this.javaLauncher = jdk.getJavaLauncher(project)
+        }
         named("main") {
             imageName.set("fxbrowser")
             mainClass.set("com.dua3.fxbrowser.FxBrowser")
-            this.javaLauncher = jdk.getJavaLauncher(project)
         }
     }
 }
