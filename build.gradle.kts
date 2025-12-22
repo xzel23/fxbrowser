@@ -1,8 +1,9 @@
 plugins {
     id("application")
     id("com.github.spotbugs") version "6.4.8"
-    id("com.dua3.gradle.jdkprovider") version "0.1.0"
+    id("com.dua3.gradle.jdkprovider") version "0.2.0"
     id("org.beryx.jlink") version "3.2.0"
+    id("org.graalvm.buildtools.native") version "0.11.3"
     id("com.github.ben-manes.versions") version "0.53.0"
 }
 
@@ -15,10 +16,21 @@ application {
 jdk {
     version = "25"
     javaFxBundled = true
+    nativeImageCapable = true
 }
 
 jlink {
     javaHome = jdk.jdkHome
+}
+
+graalvmNative {
+    binaries {
+        named("main") {
+            imageName.set("fxbrowser")
+            mainClass.set("com.dua3.fxbrowser.FxBrowser")
+            this.javaLauncher = jdk.getJavaLauncher(project)
+        }
+    }
 }
 
 repositories {
